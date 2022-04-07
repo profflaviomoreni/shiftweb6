@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.fiap.shiftweb6.model.UsuarioModel;
+import br.com.fiap.shiftweb6.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+	
+	@Autowired
+	UsuarioRepository usuarioRepository;
+	//UsuarioRepository usuarioRepository = new UsuarioRepository();
+	
+	
 
 	@GetMapping
 	public ResponseEntity<List<UsuarioModel>> findAll() {
@@ -75,8 +83,9 @@ public class UsuarioController {
 		System.out.println(usuarioModel);
 		
 		if ( null != usuarioModel.getIdade() ) {
-			// Esse trecho será alterado por uma chamada no banco de dados.	
-			usuarioModel.setIdUsuario(999L);
+			
+			usuarioRepository.save(usuarioModel);
+			
 			
 			URI location = ServletUriComponentsBuilder
 					.fromCurrentRequest()
