@@ -50,26 +50,34 @@ public class UsuarioController {
 	
 	@GetMapping("/{email}/{senha}")
 	public ResponseEntity<UsuarioModel> findByEmailAndSenha(
-		@PathVariable("email")	String paramEmail, 
-		@PathVariable("senha")	String paramSenha) {
+		@PathVariable("email")	String email, 
+		@PathVariable("senha")	String senha) {
 		
-		System.out.println( paramEmail + paramSenha );
+		return loginUsuario(email, senha);
 		
-		UsuarioModel usuarioModel = new UsuarioModel("191", "fmoreni1@gmail.com.br");
-		return ResponseEntity.ok(usuarioModel);
 	}
-	
-	
+
 	@GetMapping("/login")
 	public ResponseEntity<UsuarioModel> login(
 		@RequestParam	String email, 
 		@RequestParam	String senha) {
 		
-		System.out.println( email + senha);
-		
-		UsuarioModel usuarioModel = new UsuarioModel("191", "fmoreni1@gmail.com.br");
-		return ResponseEntity.ok(usuarioModel);
+		return loginUsuario(email, senha);
 	}
+
+	private ResponseEntity<UsuarioModel> loginUsuario(String email, String senha) {
+		UsuarioModel usuarioModel = 
+				usuarioRepository.findByEmailAndSenha(email, senha);
+		
+		if ( usuarioModel != null ) {
+			return ResponseEntity.ok(usuarioModel);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
+	
 	
 	
 	@PostMapping
