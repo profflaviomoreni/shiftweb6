@@ -32,26 +32,20 @@ public class UsuarioController {
 
 	@GetMapping
 	public ResponseEntity<List<UsuarioModel>> findAll() {
-		
-		List<UsuarioModel> lista = new ArrayList<>();
-		lista.add( new UsuarioModel("191", "fmoreni1@gmail.com.br") );
-		lista.add( new UsuarioModel("192", "fmoreni2@gmail.com.br") );
-		lista.add( new UsuarioModel("193", "fmoreni3@gmail.com.br") );
-		
+		List<UsuarioModel> lista = usuarioRepository.findAll();
 		return ResponseEntity.ok(lista);
 	}
 	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UsuarioModel> findById(@PathVariable("id") Long id) {
+		UsuarioModel usuarioModel = usuarioRepository.findById(id).orElse(null);
 		
-		if( id == 1 ) { 
-			UsuarioModel usuarioModel = new UsuarioModel("191", "fmoreni1@gmail.com.br");
+		if ( usuarioModel != null  ) {
 			return ResponseEntity.ok(usuarioModel);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
-		
 	}
 	
 	@GetMapping("/{email}/{senha}")
@@ -86,7 +80,6 @@ public class UsuarioController {
 			
 			usuarioRepository.save(usuarioModel);
 			
-			
 			URI location = ServletUriComponentsBuilder
 					.fromCurrentRequest()
 					.path("/{id}")
@@ -105,15 +98,21 @@ public class UsuarioController {
 	public ResponseEntity put(@PathVariable("id") Long id,  @RequestBody UsuarioModel usuarioModel) {
 		System.out.println(usuarioModel);
 		
-		if ( id != 1 ) {
-			return ResponseEntity.notFound().build();
-		} else if ( (null == id) || ( null == usuarioModel.getIdUsuario() ) ) {
+		if ( (null == id) || ( null == usuarioModel.getIdUsuario() ) ) {
 			return ResponseEntity.badRequest().body("id não informado");
+			
 		} else if ( id != usuarioModel.getIdUsuario() ) {
 			return ResponseEntity.badRequest().body("id errado");
+			
 		} else if ( null == usuarioModel.getIdade() ) {
 			return ResponseEntity.badRequest().body("idade não informada");
+			
+		} else if ( ! usuarioRepository.existsById(id) ) {
+			return ResponseEntity.notFound().build();
+			
 		} else {
+			usuarioModel.setIdUsuario(id);
+			usuarioRepository.save(usuarioModel);
 			return ResponseEntity.noContent().build();
 		}
 		
@@ -123,10 +122,11 @@ public class UsuarioController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		
-		if ( id != 1 ) {
-			return ResponseEntity.notFound().build();
-		} else {
+		if ( usuarioRepository.existsById(id) ) {
+			usuarioRepository.deleteById(id);
 			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
 		}
 		
 	}
