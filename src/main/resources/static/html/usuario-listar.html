@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Usuário Lista</title>
+
+	<link rel="stylesheet" 
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+		crossorigin="anonymous" />
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+		crossorigin="anonymous"></script>
+	
+	<script>
+
+		$(document).ready( 
+			function() {
+
+				var endpoint = "http://localhost:8080/usuario/";
+
+				var apiHeader = {
+					method: 'GET',
+					header: {'Content-type': 'application/json'}
+				};
+				
+
+				fetch( endpoint , apiHeader )
+					.then(response => response.json() ) // clicando no botão send do Postman
+					.then(data => {
+							data.forEach(usuario => {
+								var conteudo = "<tr>" +
+													"<td>" + usuario.idUsuario + "</td>" +
+													"<td>" + usuario.nome + "</td>" +
+													"<td>" + usuario.email + "</td>" +
+													"<td>" + usuario.idade + "</td>" +
+												"</tr>";
+
+								$("#tabelaUsuario>tbody").append(conteudo);			
+							});
+						}
+					) // manipular a resposta
+					.catch(erro => alert('Não foi possível consultar os usuários'));
+
+				
+
+			}
+		);
+			
+	</script>
+
+</head>
+<body>
+
+	<div class="container">
+		<main role="main" class="pb-3">
+			<div class="col-md-12">
+				<h1>Usuários</h1>
+				<table id="tabelaUsuario" class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr>
+							<th data-field="id">Id</th>
+							<th data-field="nome">Nome</th>
+							<th data-field="email">Email</th>
+							<th data-field="idade">Idade</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+		</main>
+	</div>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
