@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Usuário Lista</title>
+
+	<link rel="stylesheet" 
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+		crossorigin="anonymous" />
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+		crossorigin="anonymous"></script>
+	
+	<script>
+
+		$(document).ready( 
+			function() {
+
+                var endpoint = "http://localhost:8080/usuario/1";
+
+                // Consulta do usuário.
+                    // fetch (get API do usuário)
+
+                // Carregar os dados na tela.
+                    // dados do fetch --> formulário
+                    // $("#nome").val('valor ...');
+                
+
+				
+                $("#botaoGravar").click( function () {
+                
+                    var dadosFormulario = new FormData( $("#formUsuario").get(0) );
+                    var usuarioJson = Object.fromEntries( dadosFormulario.entries() );
+
+                    // ATENÇÃO --- ID do USUARIO
+                    
+
+                    /*
+                    var apiHeader = {
+                        method: 'POST',
+                        body: JSON.stringify(usuarioJson),
+                        headers: {'Content-Type': 'application/json; charset=UTF-8'}
+                    };
+                
+                    fetch( endpoint, apiHeader )
+                        .then( function (resposta) {
+                            if ( resposta.ok) {
+                                alert('Usuário alterador com sucesso');
+                            } else {
+                                alert('Não foi possível cadastrar o usuário (' + resposta.status +')');
+                            }       
+                        });
+                    */
+                });
+				
+			}
+		);
+			
+	</script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well">
+                    <h2>Usuário - Novo</h2>
+
+                    <form id="formUsuario" name="formUsuario" method="post" enctype="multipart/form-data">
+                        <!-- atenção -->
+                        <input id="idUsuario" name="idUsuario" type="hidden"/>
+
+                        <div class="form-group">
+                            <label for="nome" class="control-label">Nome:</label>
+                            <input id="nome" name="nome" type="text" class="control-label" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email:</label>
+                            <input id="email" name="email" type="text" class="control-label" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="idade" class="control-label">Idade:</label>
+                            <input id="idade" name="idade" type="text" class="control-label" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf" class="control-label">CPF:</label>
+                            <input id="cpf" name="cpf" type="text" class="control-label" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="foto" class="control-label">Foto:</label>
+                            <input id="foto" name="foto" type="text" class="control-label" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha" class="control-label">Senha:</label>
+                            <input id="senha" name="senha" type="password" class="control-label" />
+                        </div>
+
+                        <button type="button" id="botaoGravar" class="btn btn-primary btn-lg">Gravar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

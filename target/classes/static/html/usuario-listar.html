@@ -28,18 +28,22 @@
 
 				fetch( endpoint , apiHeader )
 					.then(response => response.json() ) // clicando no botão send do Postman
-					.then(data => console.log(data) ) // manipular a resposta
-					.catch(erro => alert('Não foi possível consultar os usuários')); // Tratando erro
+					.then(data => {
+							data.forEach(usuario => {
+								var conteudo = "<tr>" +
+													"<td>" + usuario.idUsuario + "</td>" +
+													"<td>" + usuario.nome + "</td>" +
+													"<td>" + usuario.email + "</td>" +
+													"<td>" + usuario.idade + "</td>" +
+												"</tr>";
 
+								$("#tabelaUsuario>tbody").append(conteudo);			
+							});
+						}
+					) // manipular a resposta
+					.catch(erro => alert('Não foi possível consultar os usuários'));
 
-
-				for ( var i = 0; i < 10; i++) {
-
-					var conteudo = "<tr><td>" + i + "</td><td>Flavio</td><td>fmoreni@gmail.com</td><td>40</td></tr>";
-
-					$("#tabelaUsuario>tbody").append(conteudo);
-
-				}
+				
 
 			}
 		);
@@ -63,26 +67,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<!--
-						<tr>
-							<td>1</td>
-							<td>Flavio</td>
-							<td>fmoreni@gmail.com</td>
-							<td>40</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Flavio</td>
-							<td>fmoreni@gmail.com</td>
-							<td>40</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Flavio</td>
-							<td>fmoreni@gmail.com</td>
-							<td>40</td>
-						</tr>
-						-->
+						
 					</tbody>
 				</table>
 			</div>
