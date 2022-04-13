@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Usuário Lista</title>
+	<title>Usuário Novo</title>
 
 	<link rel="stylesheet" 
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -32,7 +32,7 @@
                         headers: {'Content-Type': 'application/json; charset=UTF-8'}
                     };
                 
-                    fetch( endpoint, apiHeader )
+                    fetch( endpoint, apiHeader ) //send dos dados API
                         .then( function (resposta) {
                             if ( resposta.ok) {
                                 
