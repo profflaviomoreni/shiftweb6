@@ -27,6 +27,6 @@ public interface CategoriaRepository extends JpaRepository<CategoriaModel, Long>
 	public Long getTotalCategorias();
 	
 	
-	public List<CategoriaModel> findByNomeCategoriaContaining(String nome);
+	public List<CategoriaModel> findByNomeCategoriaContains(String nome);
 	
 }

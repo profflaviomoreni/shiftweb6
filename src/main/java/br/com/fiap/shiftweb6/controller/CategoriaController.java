@@ -48,7 +48,7 @@ public class CategoriaController {
 	public ResponseEntity<List<CategoriaModel>> findByNome(
 			@RequestParam("nome") String nome) {
 		
-		return ResponseEntity.ok( categoriaRepository.findByNomeCategoriaContaining(nome) );
+		return ResponseEntity.ok( categoriaRepository.findByNomeCategoriaContains(nome) );
 		
 	}
 	
