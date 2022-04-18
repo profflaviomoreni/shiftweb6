@@ -17,8 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.fiap.shiftweb6.model.CategoriaModel;
 import br.com.fiap.shiftweb6.model.ProdutoModel;
+import br.com.fiap.shiftweb6.model.mixin.ProdutosMixin;
+import br.com.fiap.shiftweb6.model.mixin.SkuMixin;
 import br.com.fiap.shiftweb6.repository.ProdutoRepository;
 
 @RestController
@@ -31,17 +38,18 @@ public class ProdutoController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoModel> findById(@PathVariable("id") Long id) {
+	public ResponseEntity<JsonNode> findById(@PathVariable("id") Long id) throws JsonProcessingException {
 		ProdutoModel produtoModel = produtoRepository.findById(id).orElse(null);
 		
-		System.out.println(produtoModel.getNome());
-		System.out.println(produtoModel.getPreco());
-		System.out.println(produtoModel.getMarcaModel().getNomeMarca());
+		ObjectMapper mapper = new ObjectMapper(); // mapeamento
+		mapper.addMixIn(CategoriaModel.class, ProdutosMixin.class);
+		mapper.addMixIn(ProdutoModel.class, SkuMixin.class);
+		
 		
 		if ( null == produtoModel ) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok(produtoModel);  // Problema
+			return ResponseEntity.ok( mapper.readTree( mapper.writeValueAsString(produtoModel) ) );  
 		}
 		
 	}

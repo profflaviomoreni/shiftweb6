@@ -29,8 +29,8 @@ public class CategoriaModel {
 	private Boolean ativo;
 	
 	
-	//@OneToMany(mappedBy = "categoriaModel" , fetch = FetchType.EAGER)
-	//private List<ProdutoModel> produtos;
+	@OneToMany(mappedBy = "categoriaModel" , fetch = FetchType.EAGER)
+	private List<ProdutoModel> produtos;
 	
 	
 	public CategoriaModel() {
@@ -71,13 +71,13 @@ public class CategoriaModel {
 	}
 	
 	
-	//public List<ProdutoModel> getProdutos() {
-	//	return produtos;
-	//}
+	public List<ProdutoModel> getProdutos() {
+		return produtos;
+	}
 
-	//public void setProdutos(List<ProdutoModel> produtos) {
-	//	this.produtos = produtos;
-	//}
+	public void setProdutos(List<ProdutoModel> produtos) {
+		this.produtos = produtos;
+	}
 
 	@Override
 	public String toString() {
