@@ -14,86 +14,78 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.fiap.shiftweb6.model.CategoriaModel;
-import br.com.fiap.shiftweb6.repository.CategoriaRepository;
+import br.com.fiap.shiftweb6.model.ProdutoModel;
+import br.com.fiap.shiftweb6.repository.ProdutoRepository;
 
 @RestController
-@RequestMapping("/categoria")
-public class CategoriaController {
+@RequestMapping("/produto")
+public class ProdutoController {
 
+	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	ProdutoRepository produtoRepository;
+	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaModel> findById(@PathVariable("id") Long id) {
-		CategoriaModel categoriaModel = categoriaRepository.findById(id).orElse(null);
+	public ResponseEntity<ProdutoModel> findById(@PathVariable("id") Long id) {
+		ProdutoModel produtoModel = produtoRepository.findById(id).orElse(null);
 		
-		if ( null == categoriaModel ) {
+		System.out.println(produtoModel.getNome());
+		System.out.println(produtoModel.getPreco());
+		System.out.println(produtoModel.getMarcaModel().getNomeMarca());
+		
+		if ( null == produtoModel ) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok(categoriaModel);
+			return ResponseEntity.ok(produtoModel);  // Problema
 		}
 		
 	}
 	
 	@GetMapping()
-	public ResponseEntity<List<CategoriaModel>> findAll() {
-		return ResponseEntity.ok( categoriaRepository.findAll() );	
-	}
-	
-	
-	@GetMapping("/total")
-	public ResponseEntity<Long> getTotalCategorias() {
-		return ResponseEntity.ok(categoriaRepository.getTotalCategorias());
-	}
-	
-	
-	@GetMapping("/nome")
-	public ResponseEntity<List<CategoriaModel>> findByNome(
-			@RequestParam("nome") String nome) {
+	public ResponseEntity<List<ProdutoModel>> findAll() {
+		List<ProdutoModel> lista = produtoRepository.findAll();
 		
-		return ResponseEntity.ok( categoriaRepository.findByNomeCategoriaContains(nome) );
-		
+		return ResponseEntity.ok( lista );	// Problema
 	}
 	
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@CrossOrigin("*")
-	public ResponseEntity post(@RequestBody CategoriaModel categoriaModel) {
+	public ResponseEntity post(@RequestBody ProdutoModel produtoModel) {
 		
-		categoriaRepository.save(categoriaModel);
+		produtoRepository.save(produtoModel);
 			
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand(categoriaModel.getIdCategoria()).toUri();
+				.buildAndExpand(produtoModel.getIdProduto()).toUri();
 		
 		return ResponseEntity.created(location).build();
 			
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity put(@PathVariable("id") Long id,  @RequestBody CategoriaModel categoriaModel) {
-		categoriaModel.setIdCategoria(id);
-		categoriaRepository.save(categoriaModel);
+	public ResponseEntity put(@PathVariable("id") Long id,  @RequestBody ProdutoModel produtoModel) {
+		produtoModel.setIdProduto(id);
+		produtoRepository.save(produtoModel);
 		return ResponseEntity.noContent().build();
 	}
 	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
-		if ( categoriaRepository.existsById(id) ) {
-			categoriaRepository.deleteById(id);
+		if ( produtoRepository.existsById(id) ) {
+			produtoRepository.deleteById(id);
 			return ResponseEntity.noContent().build();
 		} else {
 			return ResponseEntity.notFound().build();
 		}
 		
 	}
-	
 	
 }

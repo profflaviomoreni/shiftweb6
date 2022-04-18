@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import br.com.fiap.shiftweb6.model.CategoriaModel;
 
+@Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaModel, Long> {
 
 	static final String QUERY_TOTAL_CATEGORIA = "SELECT COUNT(ATIVO) QUANT FROM SHIFT6_CATEGORIA WHERE ATIVO = 1";

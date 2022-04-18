@@ -15,7 +15,7 @@ public class CategoriaModel {
 	@Id
 	@Column(name="ID_CATEGORIA")
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "CATEGORIA_SEQ")
-	@SequenceGenerator( name = "CATEGORIA_SEQ", initialValue = 10, allocationSize = 1)
+	@SequenceGenerator( name = "CATEGORIA_SEQ", initialValue = 1, allocationSize = 1)
 	private Long idCategoria;
 
 	@Column(name="NOME_CATEGORIA")
