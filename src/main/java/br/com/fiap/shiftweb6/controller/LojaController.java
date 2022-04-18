@@ -21,7 +21,7 @@ import br.com.fiap.shiftweb6.model.LojaModel;
 import br.com.fiap.shiftweb6.repository.LojaRepository;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/loja")
 public class LojaController {
 
 	
