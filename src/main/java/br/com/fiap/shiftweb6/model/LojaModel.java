@@ -1,13 +1,23 @@
 package br.com.fiap.shiftweb6.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@Table(name = "SHIFT6_LOJA")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 public class LojaModel {
 
 	
@@ -19,7 +29,11 @@ public class LojaModel {
 	
 	@Column(name = "NOME_LOJA")
 	private String nomeLoja;
+	
+	@ManyToMany( mappedBy = "lojas" ,  fetch = FetchType.EAGER )
+	private List<ProdutoModel> produtos;
 
+	
 	public Long getIdLoja() {
 		return idLoja;
 	}
@@ -35,6 +49,16 @@ public class LojaModel {
 	public void setNomeLoja(String nomeLoja) {
 		this.nomeLoja = nomeLoja;
 	}
+
+	public List<ProdutoModel> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<ProdutoModel> produtos) {
+		this.produtos = produtos;
+	}
+	
+	
 	
 	
 	

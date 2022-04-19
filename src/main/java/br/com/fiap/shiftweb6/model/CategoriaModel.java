@@ -29,7 +29,7 @@ public class CategoriaModel {
 	private Boolean ativo;
 	
 	
-	@OneToMany(mappedBy = "categoriaModel" , fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "categoriaModel" , fetch = FetchType.LAZY)
 	private List<ProdutoModel> produtos;
 	
 	
