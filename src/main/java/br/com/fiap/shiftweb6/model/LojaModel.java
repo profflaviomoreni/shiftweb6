@@ -31,6 +31,7 @@ public class LojaModel {
 	private String nomeLoja;
 	
 	@ManyToMany( mappedBy = "lojas" ,  fetch = FetchType.EAGER )
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private List<ProdutoModel> produtos;
 
 	

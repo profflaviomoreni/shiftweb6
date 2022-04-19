@@ -54,10 +54,12 @@ public class ProdutoModel {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_MARCA", nullable = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private MarcaModel marcaModel;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_CATEGORIA", nullable = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private CategoriaModel categoriaModel;
 	
 	
@@ -65,7 +67,9 @@ public class ProdutoModel {
 	@JoinTable(  
 			name = "SHIFT6_PRODUTO_LOJA",
 			joinColumns = @JoinColumn( name="ID_PRODUTO", referencedColumnName = "ID_PRODUTO"),
-			inverseJoinColumns = @JoinColumn( name="ID_LOJA", referencedColumnName = "ID_LOJA") )
+			inverseJoinColumns = @JoinColumn( name="ID_LOJA", referencedColumnName = "ID_LOJA")
+			)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private List<LojaModel> lojas;
 	
 	

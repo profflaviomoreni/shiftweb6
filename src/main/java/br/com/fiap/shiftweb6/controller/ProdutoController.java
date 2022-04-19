@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.fiap.shiftweb6.model.CategoriaModel;
 import br.com.fiap.shiftweb6.model.ProdutoModel;
+import br.com.fiap.shiftweb6.model.mixin.LojasMixin;
 import br.com.fiap.shiftweb6.model.mixin.ProdutosMixin;
 import br.com.fiap.shiftweb6.model.mixin.SkuMixin;
 import br.com.fiap.shiftweb6.repository.ProdutoRepository;
@@ -44,6 +45,7 @@ public class ProdutoController {
 		ObjectMapper mapper = new ObjectMapper(); // mapeamento
 		mapper.addMixIn(CategoriaModel.class, ProdutosMixin.class);
 		mapper.addMixIn(ProdutoModel.class, SkuMixin.class);
+		mapper.addMixIn(ProdutoModel.class, LojasMixin.class);
 		
 		
 		if ( null == produtoModel ) {
