@@ -34,10 +34,6 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoModel> findById(@PathVariable("id") Long id) {
 		ProdutoModel produtoModel = produtoRepository.findById(id).orElse(null);
 		
-		System.out.println(produtoModel.getNome());
-		System.out.println(produtoModel.getPreco());
-		System.out.println(produtoModel.getMarcaModel().getNomeMarca());
-		
 		if ( null == produtoModel ) {
 			return ResponseEntity.notFound().build();
 		} else {
